@@ -1,0 +1,37 @@
+(require mzlib/string) ;eval-string
+(require racket/file)  ;file->string
+
+(m_initmidi)
+ 
+(define m_cc0 0)
+(define m_cc1 0)
+(define m_cc2 0)
+(define m_cc3 0)
+(define m_cc4 0)
+(define m_cc5 0)
+(define m_cc6 0)
+(define m_cc7 0)
+
+(define (update)
+  (set! cc0 (m_midicc 0))
+  (set! cc1 (m_midicc 1))
+  (set! cc2 (m_midicc 2))
+  (set! cc3 (m_midicc 3))
+  (set! cc4 (m_midicc 4))
+  (set! cc5 (m_midicc 5))
+  (set! cc6 (m_midicc 6))
+  (set! cc7 (m_midicc 7))
+)
+
+(define (start-midi-monitor)
+  (rm-task 'midi-update-task)
+  (spawn-task (lambda () (update)) 'midi-update-task)
+)
+
+
+(define (stop-midi-monitor)
+  (rm-task 'midi-update-task)
+)
+
+;(start-midi-monitor)
+;(stop-midi-monitor)
